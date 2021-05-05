@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/eventsFragment">
+
+    <fragment
+        android:id="@+id/eventsFragment"
+        android:name="com.dannark.myevents.ui.events.EventsFragment"
+        android:label="@string/my_events">
+        <action
+            android:id="@+id/action_eventsFragment_to_eventDetailsFragment"
+            app:destination="@id/eventDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/eventDetailsFragment"
+        android:name="com.dannark.myevents.ui.eventdetails.EventDetailsFragment"
+        android:label="@string/event_details"
+        tools:layout="@layout/fragment_event_details">
+        <argument
+            android:name="eventSelected"
+            app:argType="com.dannark.myevents.domain.Event" />
+        <action
+            android:id="@+id/action_eventDetailsFragment_to_eventsFragment"
+            app:destination="@id/eventsFragment" />
+        <action
+            android:id="@+id/action_eventDetailsFragment_to_checkinFragment"
+            app:destination="@id/checkinFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/checkinFragment"
+        android:name="com.dannark.myevents.ui.checkin.CheckinFragment"
+        android:label="CheckinFragment" >
+        <action
+            android:id="@+id/action_checkinFragment_to_eventDetailsFragment"
+            app:destination="@id/eventDetailsFragment" />
+    </fragment>
+</navigation>

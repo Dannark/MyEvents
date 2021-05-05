@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">MyEvents</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="lorem_ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s…</string>
+    <string name="lorem_ipsum_small">Lorem Ipsum is simply dummy text of the printing and typesetting industry…</string>
+
+    <string name="posted_time_s">Posted %1$ss ago</string>
+    <string name="posted_time_m">Posted %1$sm ago</string>
+    <string name="posted_time_h">Posted %1$sh ago</string>
+    <string name="posted_time_d">Posted %1$sd ago</string>
+    <string name="posted_time_M">Posted %1$s months ago</string>
+    <string name="posted_time_y">Posted %1$s years ago</string>
+    <string name="events_next_to_you_found">Events next to you found: %1$d</string>
+    <string name="card_transition_name">card_%1$s</string>
+    <string name="card_detail_transition_name">event_card_detail</string>
+    <string name="check_in_now">Check in Now!</string>
+    <string name="refreshed">Refreshed</string>
+    <string name="event_details">Event Details</string>
+    <string name="my_events">My Events</string>
+    <string name="your_name">Your name</string>
+    <string name="e_mail">E-mail</string>
+    <string name="contact">Contact:</string>
+    <string name="send">Send</string>
+    <string name="error_invalid_name">Invalid name</string>
+    <string name="error_invalid_email">This email is not valid</string>
+    <string name="checkin">Checkin!</string>
+    <string name="a_few_more_details_and_voila">A few more details and voila!</string>
+</resources>

@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">MyEvents</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="lorem_ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s…</string>
+    <string name="lorem_ipsum_small">Lorem Ipsum is simply dummy text of the printing and typesetting industry…</string>
+
+    <string name="posted_time_s">%1$s秒前に投稿</string>
+    <string name="posted_time_m">%1$s分前に投稿</string>
+    <string name="posted_time_h">%1$s時間前に投稿</string>
+    <string name="posted_time_d">%1$s日前に投稿</string>
+    <string name="posted_time_M">%1$sメセス前に投稿</string>
+    <string name="posted_time_y">%1$s年前に投稿</string>
+    <string name="events_next_to_you_found">あなたの隣のイベントが見つかりました： %1$d</string>
+    <string name="card_transition_name">card_%1$s</string>
+    <string name="card_detail_transition_name">event_card_detail</string>
+    <string name="check_in_now">今すぐチェックイン！</string>
+    <string name="refreshed">リフレッシュ</string>
+    <string name="event_details">イベントの詳細</string>
+    <string name="my_events">私のイベント</string>
+    <string name="your_name">あなたの名前</string>
+    <string name="e_mail">Eメール</string>
+    <string name="contact">連絡先:</string>
+    <string name="send">送信</string>
+    <string name="error_invalid_name">無効な名前</string>
+    <string name="error_invalid_email">無効なメール</string>
+    <string name="checkin">チェックイン！</string>
+    <string name="a_few_more_details_and_voila">さらにいくつかの詳細と出来上がり！</string>
+</resources>
