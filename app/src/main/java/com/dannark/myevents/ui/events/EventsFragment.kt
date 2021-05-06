@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.doOnPreDraw
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.dannark.myevents.R
@@ -51,20 +52,15 @@ class EventsFragment : Fragment() {
 
     private fun setupObservableFields(){
         viewModel.eventList.observe(viewLifecycleOwner) {
-            it?.let {
+            it.let {
                 eventAdapter.addHeaderAndSubmitList(it)
             }
         }
     }
 
-    private fun setupSnackbar() {
-
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Render Back transition animation for Places Details Frag to -> this fragment
         postponeEnterTransition()
         view.doOnPreDraw { startPostponedEnterTransition() }
     }

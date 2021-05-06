@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">MyEvents</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="lorem_ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s…</string>
     <string name="lorem_ipsum_small">Lorem Ipsum is simply dummy text of the printing and typesetting industry…</string>
@@ -26,4 +25,9 @@
     <string name="error_invalid_email">This email is not valid</string>
     <string name="checkin">Checkin!</string>
     <string name="a_few_more_details_and_voila">A few more details and voila!</string>
+    <string name="is_checkin_successful">Done! Thank you ;)</string>
+    <string name="is_checkin_unsuccessful">Sorry, something went wrong… please try again</string>
+    <string name="share_event">Hey, check it out:\n *%1$s* \n\n%2$s \n\nPrice: %3$s \n\nLocation: %4$s \n\nFor more information please visit: %5$s</string>
+    <string name="event_image">Event image</string>
+    <string name="share">Share</string>
 </resources>

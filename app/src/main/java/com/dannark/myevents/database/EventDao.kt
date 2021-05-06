@@ -12,6 +12,9 @@ interface EventDao {
     @Query("SELECT * FROM events ORDER BY id DESC")
     fun getAll(): LiveData<List<EventEntity>>
 
+    @Query("SELECT * FROM events ORDER BY id DESC")
+    fun getAllWithoutObserve(): List<EventEntity>
+
     @Delete
     fun delete(vararg eventEntity: EventEntity): Int
 }

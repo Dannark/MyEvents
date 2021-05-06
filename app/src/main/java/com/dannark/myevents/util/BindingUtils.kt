@@ -57,6 +57,5 @@ fun ImageView.bindImage(imgUrl: String?, bitmap: Bitmap?, centerCrop: Boolean = 
 
 @BindingAdapter("isVisibleOnLoading")
 fun LinearLayout.isVisibleOnLoading(isLoading: Boolean){
-    Log.e("Binding","visible = $isLoading")
     if(isLoading) visibility = View.VISIBLE else visibility = View.GONE
 }

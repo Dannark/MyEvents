@@ -32,6 +32,9 @@
         android:id="@+id/checkinFragment"
         android:name="com.dannark.myevents.ui.checkin.CheckinFragment"
         android:label="CheckinFragment" >
+        <argument
+            android:name="eventSelected"
+            app:argType="com.dannark.myevents.domain.Event" />
         <action
             android:id="@+id/action_checkinFragment_to_eventDetailsFragment"
             app:destination="@id/eventDetailsFragment" />

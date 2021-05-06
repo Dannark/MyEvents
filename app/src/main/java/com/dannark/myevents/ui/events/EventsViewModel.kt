@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.dannark.myevents.R
 import com.dannark.myevents.database.MyEventsDatabase
-import com.dannark.myevents.repository.EventRepository
+import com.dannark.myevents.repository.event.DefaultEventRepository
 import com.dannark.myevents.util.isConnectedToInternet
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,9 +23,8 @@ class EventsViewModel(private val app: Application) : AndroidViewModel(app) {
     }
 
     private val uiScope = CoroutineScope(Dispatchers.Main +  viewModelJob)
-    private val database = MyEventsDatabase.getInstance(app)
 
-    private val eventRepository = EventRepository(database)
+    private val eventRepository = DefaultEventRepository.getRepository(app)
     val eventList = eventRepository.events
 
     private val _dataLoading = MutableLiveData<Boolean>()
@@ -41,7 +40,7 @@ class EventsViewModel(private val app: Application) : AndroidViewModel(app) {
         if (isConnected) {
             _dataLoading.value = true
             uiScope.launch {
-                //eventRepository.refreshEvents()
+                eventRepository.refreshEvents()
                 _dataLoading.value = false
 
                 if (isRefresh){

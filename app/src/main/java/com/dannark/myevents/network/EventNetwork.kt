@@ -33,9 +33,9 @@ data class EventNetwork (
     val id: String,
 )
 
-fun List<EventNetwork>.asDatabaseInModel(): Array<EventEntity>{
+fun List<EventNetwork>.asEvent(): List<Event>{
     return this.map{
-        EventEntity(
+        Event(
             date = it.date,
             description = it.description,
             image = it.image,
@@ -45,5 +45,5 @@ fun List<EventNetwork>.asDatabaseInModel(): Array<EventEntity>{
             title = it.title,
             id = it.id
         )
-    }.toTypedArray()
+    }
 }

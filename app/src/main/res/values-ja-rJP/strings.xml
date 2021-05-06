@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">MyEvents</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="lorem_ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s…</string>
     <string name="lorem_ipsum_small">Lorem Ipsum is simply dummy text of the printing and typesetting industry…</string>
@@ -26,4 +25,9 @@
     <string name="error_invalid_email">無効なメール</string>
     <string name="checkin">チェックイン！</string>
     <string name="a_few_more_details_and_voila">さらにいくつかの詳細と出来上がり！</string>
+    <string name="is_checkin_successful">完了しました。 ありがとうございました ;）</string>
+    <string name="is_checkin_unsuccessful">申し訳ありませんが、問題が発生しました…もう一度お試しください</string>
+    <string name="share_event">ねえ、それをチェックしてください：\n *%1$s* \n\n%2$s \n\n価格： %3$s \n\nロケーション：%4$s \n\n詳細については、以下をご覧ください。 %5$s</string>
+    <string name="event_image">イベント画像</string>
+    <string name="share">Share</string>
 </resources>
