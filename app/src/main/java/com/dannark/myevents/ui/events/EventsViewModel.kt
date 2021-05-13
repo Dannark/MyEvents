@@ -5,16 +5,19 @@ import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.dannark.myevents.R
 import com.dannark.myevents.database.MyEventsDatabase
 import com.dannark.myevents.repository.event.DefaultEventRepository
+import com.dannark.myevents.repository.event.EventRepository
 import com.dannark.myevents.util.isConnectedToInternet
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
-class EventsViewModel(private val app: Application) : AndroidViewModel(app) {
+class EventsViewModel(private val eventRepository: EventRepository) : ViewModel() {
     private var viewModelJob = SupervisorJob()
 
     override fun onCleared() {
@@ -24,36 +27,20 @@ class EventsViewModel(private val app: Application) : AndroidViewModel(app) {
 
     private val uiScope = CoroutineScope(Dispatchers.Main +  viewModelJob)
 
-    private val eventRepository = DefaultEventRepository.getRepository(app)
     val eventList = eventRepository.events
 
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
 
     init {
-        loadEvents(false)
+        loadEvents()
     }
 
-    fun loadEvents(isRefresh:Boolean = true){
-        val isConnected = isConnectedToInternet(app)
-
-        if (isConnected) {
-            _dataLoading.value = true
-            uiScope.launch {
-                eventRepository.refreshEvents()
-                _dataLoading.value = false
-
-                if (isRefresh){
-                    Toast.makeText(app, app.getString(R.string.refreshed), Toast.LENGTH_SHORT).show()
-                }
-            }
+    fun loadEvents(){
+        _dataLoading.value = true
+        uiScope.launch {
+            eventRepository.refreshEvents()
+            _dataLoading.value = false
         }
-        else{
-            Toast.makeText(app, "No Connection to the internet!", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    fun refreshEvents(){
-        loadEvents(true)
     }
 }

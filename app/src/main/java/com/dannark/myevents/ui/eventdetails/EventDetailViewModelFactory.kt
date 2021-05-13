@@ -6,12 +6,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.dannark.myevents.domain.Event
 
 class EventDetailViewModelFactory (
-        private val selectedEvent: Event,
-        private val application: Application): ViewModelProvider.Factory{
+        private val selectedEvent: Event): ViewModelProvider.Factory{
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(EventDetailViewModel::class.java)){
-            return EventDetailViewModel(selectedEvent, application) as T
+            return EventDetailViewModel(selectedEvent) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

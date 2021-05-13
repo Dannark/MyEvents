@@ -12,17 +12,17 @@ class FakeDataSource(var eventList: List<Event> = mutableListOf()): EventsDataSo
     private val _events = MutableLiveData(eventList)
     override val events: LiveData<List<Event>> = _events
 
+    var forceError = false
+
     override suspend fun getEvents(): List<Event> {
         return eventList
     }
 
     override fun deleteEvents(eventList: Array<EventEntity>) {
-        //var newList: List<Event> = _events.value?.toMutableList() ?: mutableListOf()
-        var newList: MutableList<Event> = _events.value?.toMutableList() ?: mutableListOf()
+        val newList: MutableList<Event> = _events.value?.toMutableList() ?: mutableListOf()
 
         eventList?.let {
             val toBeRemoved = it.toList().asDomainInModel()
-            println(toBeRemoved)
 
             for (item in toBeRemoved){
                 if (newList.contains(item) == true){
@@ -39,7 +39,7 @@ class FakeDataSource(var eventList: List<Event> = mutableListOf()): EventsDataSo
 
     override suspend fun postCheckIn(checkInNetwork: CheckInNetwork): String? {
         //simulates a fail and sends null in case server is down for example
-        if(checkInNetwork.name == "simulate_fail_test"){
+        if(forceError){
             return null
         }
         return "200"

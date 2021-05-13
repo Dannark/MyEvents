@@ -31,7 +31,7 @@
     <fragment
         android:id="@+id/checkinFragment"
         android:name="com.dannark.myevents.ui.checkin.CheckinFragment"
-        android:label="CheckinFragment" >
+        android:label="Checkin">
         <argument
             android:name="eventSelected"
             app:argType="com.dannark.myevents.domain.Event" />

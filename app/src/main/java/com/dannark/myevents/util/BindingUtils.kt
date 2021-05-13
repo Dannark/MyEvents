@@ -1,6 +1,7 @@
 package com.dannark.turistando.home
 
 import android.graphics.Bitmap
+import android.os.Build
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
@@ -36,8 +37,10 @@ fun TextView.timePastFormatted(time: Long){
 
 @BindingAdapter("imageUrl", "imageBitmap", "glideCenterCrop","glideCircularCrop", "glideRoundingRadius", requireAll = false)
 fun ImageView.bindImage(imgUrl: String?, bitmap: Bitmap?, centerCrop: Boolean = false, circularCrop: Boolean = false, roundingRadius : Int = 0){
-    val imgUri = imgUrl?.toUri()?.buildUpon()?.scheme("https")?.build()
+    val imgUri = imgUrl?.toUri()?.buildUpon()?.scheme("http")?.build()
     val imgToLoad = bitmap?:imgUri
+
+    val isAPotatoDevice = (Build.VERSION.SDK_INT < 21)
 
     // Loads either Bitmap or an Url
     imgToLoad?.let {
@@ -45,11 +48,11 @@ fun ImageView.bindImage(imgUrl: String?, bitmap: Bitmap?, centerCrop: Boolean = 
                 .load(imgToLoad)
                 .apply(
                         RequestOptions()
-                                .placeholder(R.drawable.loading_animation)
                                 .error(R.drawable.ic_broken_image)
                 )
         if (centerCrop) req.centerCrop()
         if (circularCrop) req.circleCrop()
+        if (!isAPotatoDevice) req.apply(RequestOptions().placeholder(R.drawable.loading_animation))
         if (roundingRadius != 0) req.apply(RequestOptions().transform(CenterCrop(), RoundedCorners(roundingRadius)))
         req.into(this)
     }

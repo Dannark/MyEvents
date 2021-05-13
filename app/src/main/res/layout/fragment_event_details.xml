@@ -5,13 +5,14 @@
 
     <data>
         <variable
-            name="viewModel"
+            name="viewmodel"
             type="com.dannark.myevents.ui.eventdetails.EventDetailViewModel" />
     </data>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/design_default_color_surface">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,7 +36,7 @@
                     android:paddingTop="@dimen/button_padding"
                     android:paddingBottom="@dimen/button_padding"
                     android:text="@string/check_in_now"
-                    android:onClick="@{() -> viewModel.openCheckInDialog()}"
+                    android:onClick="@{() -> viewmodel.openCheckInDialog()}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     app:backgroundTint="@color/teal_200"
                     app:cornerRadius="@dimen/button_radius"
@@ -50,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="24dp"
-                    android:text="@{viewModel.selectedEvent.title}"
+                    android:text="@{viewmodel.selectedEvent.title}"
                     android:textColor="@color/black"
                     android:textSize="24sp"
                     android:textStyle="bold"
@@ -66,7 +67,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:lineSpacingExtra="2sp"
-                    android:text="@{viewModel.selectedEvent.description}"
+                    android:text="@{viewmodel.selectedEvent.description}"
                     android:textColor="@color/description_text"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -89,7 +90,7 @@
                         android:scaleType="centerCrop"
                         app:glideCenterCrop="@{false}"
                         app:glideCircularCrop="@{false}"
-                        app:imageUrl="@{viewModel.selectedEvent.image}"
+                        app:imageUrl="@{viewmodel.selectedEvent.image}"
                         tools:srcCompat="@tools:sample/backgrounds/scenic"
                         android:contentDescription="@string/event_image" />
 
@@ -98,12 +99,12 @@
                         android:layout_height="match_parent">
 
                         <TextView
-                            android:id="@+id/textView3"
+                            android:id="@+id/event_detail_price"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@color/white"
                             android:padding="8dp"
-                            android:text="@{viewModel.selectedEvent.price_formatted}"
+                            android:text="@{viewmodel.selectedEvent.price_formatted}"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textSize="18sp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -116,7 +117,7 @@
 
                 <TextView
                     android:id="@+id/Posted_time"
-                    timePastFormatted="@{viewModel.selectedEvent.date}"
+                    timePastFormatted="@{viewmodel.selectedEvent.date}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"

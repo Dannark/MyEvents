@@ -4,15 +4,17 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.dannark.myevents.domain.Event
 
-class EventDetailViewModel(event: Event, application:Application): AndroidViewModel(application) {
+class EventDetailViewModel(event: Event): ViewModel() {
+
     private val _selectedEvent = MutableLiveData<Event>()
     val selectedEvent: LiveData<Event>
         get() = _selectedEvent
 
     private val _onCheckinNavigationEvent = MutableLiveData<Boolean>()
-    val onCheckinNavigationEvent: LiveData<Boolean>
+        val onCheckinNavigationEvent: LiveData<Boolean>
             get() = _onCheckinNavigationEvent
 
     init {

@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="viewModel"
+            name="viewmodel"
             type="com.dannark.myevents.ui.checkin.CheckinViewModel" />
     </data>
 
@@ -125,7 +125,7 @@
 
         <LinearLayout
             android:id="@+id/loading"
-            isVisibleOnLoading="@{viewModel.loadingCheckInState}"
+            isVisibleOnLoading="@{viewmodel.loadingCheckInState}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/foreground_loading"

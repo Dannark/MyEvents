@@ -7,9 +7,12 @@ import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.core.app.ShareCompat
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import com.dannark.myevents.MyEventApp
 import com.dannark.myevents.R
 import com.dannark.myevents.databinding.FragmentEventDetailsBinding
 import com.dannark.myevents.domain.Event
@@ -20,8 +23,10 @@ import com.google.android.material.transition.MaterialElevationScale
 class EventDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentEventDetailsBinding
-    private lateinit var viewModel: EventDetailViewModel
-    private lateinit var eventSelected: Event
+    private val args: EventDetailsFragmentArgs by navArgs()
+    private val viewModel by viewModels<EventDetailViewModel> {
+        EventDetailViewModelFactory(args.eventSelected)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,21 +40,16 @@ class EventDetailsFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-        binding = FragmentEventDetailsBinding.inflate(inflater)
-        binding.lifecycleOwner = this
-
-        val application = requireNotNull(activity).application
-        eventSelected = EventDetailsFragmentArgs.fromBundle(requireArguments()).eventSelected
-        val viewModelFactory = EventDetailViewModelFactory(eventSelected, application)
-
-        viewModel = ViewModelProvider(this, viewModelFactory).get(EventDetailViewModel::class.java)
-        binding.viewModel = viewModel
+        val view = inflater.inflate(R.layout.fragment_event_details, container, false)
+        binding = FragmentEventDetailsBinding.bind(view).apply {
+            viewmodel = viewModel
+        }
+        binding.lifecycleOwner = this.viewLifecycleOwner
 
         setupObservableFields()
         setupShareButton()
 
-        return binding.root
+        return view
     }
 
     private fun setupObservableFields(){
@@ -70,7 +70,7 @@ class EventDetailsFragment : Fragment() {
         }
 
         findNavController().navigate(
-            EventDetailsFragmentDirections.actionEventDetailsFragmentToCheckinFragment(eventSelected))
+            EventDetailsFragmentDirections.actionEventDetailsFragmentToCheckinFragment(args.eventSelected))
     }
 
     private fun setupShareButton(){
@@ -101,12 +101,12 @@ class EventDetailsFragment : Fragment() {
     }
 
     private fun getShareIntent() : Intent {
-        val location = "https://www.google.com/maps/dir/?api=1&travelmode=driving&layer=traffic&destination=${eventSelected.latitude},${eventSelected.longitude}"
+        val location = "https://www.google.com/maps/dir/?api=1&travelmode=driving&layer=traffic&destination=${args.eventSelected.latitude},${args.eventSelected.longitude}"
         return ShareCompat.IntentBuilder.from(requireActivity())
                 .setText(getString(R.string.share_event,
-                    eventSelected.title,
-                    eventSelected.description,
-                    eventSelected.price_formatted,
+                    args.eventSelected.title,
+                    args.eventSelected.description,
+                    args.eventSelected.price_formatted,
                     location,
                     "https://myevents.app"))
                 .setType("text/plain")

@@ -56,14 +56,14 @@ internal class DefaultEventRepositoryTest {
         id= "4"
     )
     private val user1Checkin = CheckInNetwork("1","Daniel","dan@mail.com")
-    private val user2Checkin = CheckInNetwork("2","simulate_fail_test","null") // should fail
+    private val user2Checkin = CheckInNetwork("2","test2","null") // should fail
 
     private val remoteList = listOf(event1, event2).sortedBy { it.id }
     private val localList = listOf(event3).sortedBy { it.id }
     private val newListFromServer = listOf(event4).sortedBy { it.id }
 
-    private lateinit var eventRemoteDataSource: EventsDataSource
-    private lateinit var eventLocalDataSource: EventsDataSource
+    private lateinit var eventRemoteDataSource: FakeDataSource
+    private lateinit var eventLocalDataSource: FakeDataSource
     private lateinit var eventRepository: DefaultEventRepository
 
     @get:Rule
@@ -116,7 +116,10 @@ internal class DefaultEventRepositoryTest {
     @ExperimentalCoroutinesApi
     @Test
     fun postCheckIn_sendDataToRemoteDataSource_FailsProperly() = runBlockingTest {
+        eventRemoteDataSource.forceError = true
         val isSuccess = eventRepository.postCheckIn(user2Checkin)
+        eventRemoteDataSource.forceError = false
+
         assertThat(isSuccess, `is`(false))
     }
 }

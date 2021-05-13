@@ -20,9 +20,11 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="8dp"
         android:clickable="true"
+        android:focusable="true"
         android:transitionName="@{@string/card_transition_name(event.id)}"
         android:onClick="@{(view) -> clickListener.onClick(view, event)}"
-        android:foreground="@drawable/button"
+
+        android:foreground="?android:attr/selectableItemBackground"
         app:cardBackgroundColor="@color/cardColor"
         app:cardCornerRadius="10dp"
         app:cardElevation="0dp"

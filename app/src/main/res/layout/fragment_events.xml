@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="viewModel"
+            name="viewmodel"
             type="com.dannark.myevents.ui.events.EventsViewModel" />
     </data>
 
@@ -19,8 +19,8 @@
             android:id="@+id/refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:onRefreshListener="@{viewModel::refreshEvents}"
-            app:refreshing="@{viewModel.dataLoading}">
+            app:onRefreshListener="@{viewmodel::loadEvents}"
+            app:refreshing="@{viewmodel.dataLoading}">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/event_list"

@@ -18,17 +18,21 @@ android {
         versionName "1.0"
         multiDexEnabled true
 
+        vectorDrawables.useSupportLibrary = true //do not generate PNG
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            buildConfigField "String", "SERVER_URL", "\"https://5f5a8f24d44d640016169133.mockapi.io/api\""
+            buildConfigField "String", "PRD_URL", "\"https://5f5a8f24d44d640016169133.mockapi.io/api\""
+            buildConfigField "String", "DEV_URL", "\"http://192.168.0.127:3335\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
-            buildConfigField "String", "SERVER_URL", "\"https://5f5a8f24d44d640016169133.mockapi.io/api\""
+            buildConfigField "String", "PRD_URL", "\"https://5f5a8f24d44d640016169133.mockapi.io/api\""
+            buildConfigField "String", "DEV_URL", "\"http://192.168.0.127:3335\""
         }
     }
     compileOptions {
@@ -50,6 +54,12 @@ android {
 dependencies {
     //Support to androidX < 5.0
     implementation "androidx.multidex:multidex:$multidex_version"
+    def okhttp_version="3.12.12"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+    implementation("com.squareup.okhttp3:okhttp") {
+        version { strictly "$okhttp_version" }
+    }
+    implementation 'com.android.support:multidex:1.0.3'
 
     // App dependencies
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -70,10 +80,13 @@ dependencies {
     kapt 'androidx.room:room-compiler:2.2.6'
     implementation "androidx.room:room-ktx:2.2.6"
     implementation "com.github.bumptech.glide:glide:$version_glide"
+    kapt "com.github.bumptech.glide:compiler:$version_glide"
+    implementation "com.github.bumptech.glide:okhttp3-integration:$version_glide"
     implementation "com.squareup.retrofit2:converter-moshi:$version_retrofit"
     implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$version_retrofit_coroutines_adapter"
     implementation "com.squareup.moshi:moshi:$version_moshi"
     implementation "com.squareup.moshi:moshi-kotlin:$version_moshi"
+    implementation "com.jakewharton.timber:timber:$version_timber"
 
     // Testing
     testImplementation "junit:junit:$junitVersion"
@@ -85,4 +98,13 @@ dependencies {
     testImplementation "androidx.test:core-ktx:$androidXTestCoreVersion"
     testImplementation "androidx.arch.core:core-testing:$archTestingVersion"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
+    androidTestImplementation "org.mockito:mockito-core:$mockitoVersion"
+    androidTestImplementation "com.linkedin.dexmaker:dexmaker-mockito:$dexMakerVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
+    androidTestImplementation "junit:junit:$junitVersion"
+    //testing propuse, should be removed before production
+    implementation "androidx.fragment:fragment-testing:$fragmentVersion"
+    androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
+    implementation "androidx.test:core:$androidXTestCoreVersion"
 }

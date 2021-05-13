@@ -5,13 +5,18 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.dannark.myevents.MyEventApp
 import com.dannark.myevents.database.MyEventsDatabase
+import com.dannark.myevents.domain.Event
 import com.dannark.myevents.network.CheckInNetwork
 import com.dannark.myevents.repository.event.DefaultEventRepository
+import com.dannark.myevents.repository.event.EventRepository
 import kotlinx.coroutines.*
+import timber.log.Timber
 import java.lang.Exception
 
-class CheckinViewModel(app: Application): AndroidViewModel(app) {
+class CheckinViewModel(private val eventRepository: EventRepository): ViewModel() {
     private var viewModelJob = SupervisorJob()
 
     override fun onCleared() {
@@ -27,17 +32,16 @@ class CheckinViewModel(app: Application): AndroidViewModel(app) {
     val isCheckinSuccessful: LiveData<Boolean>
         get() = _isCheckinSuccessful
 
-    private val uiScope = CoroutineScope(Dispatchers.Main +  viewModelJob)
-    private val eventRepository = DefaultEventRepository.getRepository(app)
+    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    fun postCheckIn(eventId: String, userName: String, lastName: String) {
+    fun postCheckIn(eventId: String, userName: String, email: String) {
         _loadingCheckInState.value = true
         uiScope.launch {
             try {
-                val checkIn = CheckInNetwork(eventId, userName, lastName)
+                val checkIn = CheckInNetwork(eventId, userName, email)
                 _isCheckinSuccessful.value = eventRepository.postCheckIn(checkIn)
             } catch (e: Exception) {
-                Log.e("CheckinViewModel","Error when posting Checkin data to server: $e")
+                Timber.e("Error when posting Checkin data to server: $e")
             }
             _loadingCheckInState.value = false
         }

@@ -2,43 +2,47 @@ package com.dannark.myevents.ui.checkin
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.transition.Slide
+import com.dannark.myevents.MyEventApp
 import com.dannark.myevents.R
 import com.dannark.myevents.databinding.FragmentCheckinBinding
-import com.dannark.myevents.domain.Event
-import com.dannark.myevents.ui.eventdetails.EventDetailViewModel
-import com.dannark.myevents.ui.eventdetails.EventDetailsFragmentArgs
 import com.dannark.myevents.util.themeColor
 import com.google.android.material.transition.MaterialContainerTransform
 
 class CheckinFragment : Fragment() {
+
     private lateinit var binding: FragmentCheckinBinding
-    private lateinit var viewModel: CheckinViewModel
-    private lateinit var eventSelected: Event
+    private val args: CheckinFragmentArgs by navArgs()
+    private val viewModel by viewModels<CheckinViewModel>{
+        CheckinViewModelFactory((requireContext().applicationContext as MyEventApp).eventRepository)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        binding = FragmentCheckinBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = this
-        viewModel = ViewModelProvider(this).get(CheckinViewModel::class.java)
-        binding.viewModel = viewModel
+        binding = FragmentCheckinBinding.inflate(inflater, container, false).apply {
+            this.viewmodel = viewModel
+        }
 
-        eventSelected = EventDetailsFragmentArgs.fromBundle(requireArguments()).eventSelected
+        return binding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        binding.lifecycleOwner = this
 
         setOnClickToSendHandler()
         setObservableFields()
-
-        return binding.root
     }
 
     private fun setOnClickToSendHandler(){
@@ -47,7 +51,7 @@ class CheckinFragment : Fragment() {
             val email = binding.email.text.toString()
 
             if(validateFields()){
-                viewModel.postCheckIn(eventSelected.id, name, email)
+                viewModel.postCheckIn(args.eventSelected.id, name, email)
             }
         }
     }

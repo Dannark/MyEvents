@@ -1,6 +1,7 @@
 package com.dannark.myevents.repository.event
 
 import android.app.Application
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import com.dannark.myevents.database.EventEntity
@@ -13,31 +14,17 @@ import com.dannark.myevents.repository.event.remote.EventsRemoteDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import java.lang.Exception
 
 class DefaultEventRepository(
         private val eventsRemoteDataSource: EventsDataSource,
         private val eventsLocalDataSource: EventsDataSource,
-        private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO){
+        private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO) : EventRepository {
 
-    companion object {
-        @Volatile
-        private var INSTANCE: DefaultEventRepository? = null
+    override val events: LiveData<List<Event>> = eventsLocalDataSource.events
 
-        fun getRepository(app: Application): DefaultEventRepository {
-            return INSTANCE ?: synchronized(this) {
-                val database =  MyEventsDatabase.getInstance(app)
-
-                DefaultEventRepository(EventsRemoteDataSource(), EventsLocalDataSource(database.eventDao)).also {
-                    INSTANCE = it
-                }
-            }
-        }
-    }
-
-    val events: LiveData<List<Event>> = eventsLocalDataSource.events
-
-    suspend fun refreshEvents(){
+    override suspend fun refreshEvents(){
         withContext(ioDispatcher){
             try {
                 val eventList = eventsRemoteDataSource.getEvents()
@@ -50,7 +37,7 @@ class DefaultEventRepository(
         }
     }
 
-    suspend fun postCheckIn(checkInNetwork: CheckInNetwork): Boolean{
+    override suspend fun postCheckIn(checkInNetwork: CheckInNetwork): Boolean{
         var code:String?
         withContext(ioDispatcher){
             code = eventsRemoteDataSource.postCheckIn(checkInNetwork)
@@ -58,7 +45,7 @@ class DefaultEventRepository(
         return code == "200"
     }
 
-    fun findAndDeleteOldEvents(eventList: List<Event>){
+    override fun findAndDeleteOldEvents(eventList: List<Event>){
         events.value?.let {
             val itemsToBeDeleted = findDiff(eventList.asDatabaseInModel(), it.toTypedArray())
             eventsLocalDataSource.deleteEvents(itemsToBeDeleted)
@@ -82,7 +69,8 @@ class DefaultEventRepository(
                 missing.add(item.asDatabaseInModel())
             }
         }
-        //Log.e("PostRepository -","missing ${missing.size} elements")
+
+        Timber.i("missing ${missing.size} elements")
         return missing.toTypedArray()
     }
 }

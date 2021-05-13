@@ -6,6 +6,7 @@ import com.dannark.myevents.domain.Event
 import com.dannark.myevents.network.*
 import com.dannark.myevents.repository.event.EventsDataSource
 import retrofit2.await
+import timber.log.Timber
 import java.lang.Exception
 
 class EventsRemoteDataSource() : EventsDataSource {
@@ -25,7 +26,10 @@ class EventsRemoteDataSource() : EventsDataSource {
 
     override suspend fun postCheckIn(checkInNetwork: CheckInNetwork): String? {
         return try {
-            Network.events.postCheckIn(checkInNetwork).await().code
+            Timber.w("postChecIn is..")
+            val res = Network.events.postCheckIn(checkInNetwork).await().code
+            Timber.w("now res is $res")
+            return res
         }
         catch (e: Exception){
             null
